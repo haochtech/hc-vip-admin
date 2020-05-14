@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.zx-app.cn" versionCode="0.8,1.0">
+	<application setting="false">
+		<name><![CDATA[门店会员卡]]></name>
+		<identifie><![CDATA[zh_vip]]></identifie>
+		<version><![CDATA[4.9.7]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[门店会员卡]]></ability>
+		<description><![CDATA[门店会员卡]]></description>
+		<author><![CDATA[zxgc]]></author>
+		<url><![CDATA[https://www.zx-app.cn]]></url>
+	</application>
+
+	<platform>
+		<subscribes>
+		</subscribes>
+
+		<handles>
+		</handles>
+
+		<rule embed="false" />
+		<card embed="false" />
+		
+		<supports>
+			<item type="wxapp" />
+		</supports>
+        <plugins></plugins> 
+        <plugin-main name="" />
+
+	</platform>
+
+	<bindings>
+		<page>
+			<entry title="首页" do="/zh_vip/pages/index/index" state="" direct="false"/>
+		</page>
+
+	</bindings>
+
+	<permissions>
+	</permissions>
+
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_zhvip_account` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `account` varchar(20) NOT NULL COMMENT '账号',
+  `pwd` varchar(50) NOT NULL COMMENT '密码',
+  `store_id` int(11) NOT NULL COMMENT '门店id',
+  `state` int(11) NOT NULL DEFAULT '1' COMMENT '1.启用2.禁用',
+  `uniacid` int(11) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '1.店员2.店长',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_ad` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `logo` varchar(300) NOT NULL COMMENT '图片',
+  `src` varchar(300) NOT NULL COMMENT '链接地址',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  `orderby` int(4) NOT NULL COMMENT '排序',
+  `status` int(4) NOT NULL COMMENT '状态1.启用，2禁用',
+  `type` int(11) NOT NULL COMMENT '1首页幻灯片 2.开屏广告',
+  `store_id` int(11) NOT NULL,
+  `appid` varchar(30) NOT NULL,
+  `title` varchar(50) NOT NULL COMMENT '幻灯片标题',
+  `xcx_name` varchar(30) NOT NULL COMMENT '小程序名称',
+  `uniacid` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
+  `src2` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_admin` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '所属帐号',
+  `storeid` varchar(1000) NOT NULL,
+  `uid` int(10) unsigned NOT NULL DEFAULT '0',
+  `from_user` varchar(100) NOT NULL DEFAULT '',
+  `accountname` varchar(50) NOT NULL DEFAULT '',
+  `password` varchar(200) NOT NULL DEFAULT '',
+  `salt` varchar(10) NOT NULL DEFAULT '',
+  `pwd` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `pay_account` varchar(200) NOT NULL,
+  `displayorder` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '2' COMMENT '状态',
+  `role` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1:店长,2:店员',
+  `lastvisit` int(10) unsigned NOT NULL DEFAULT '0',
+  `lastip` varchar(15) NOT NULL,
+  `areaid` int(10) NOT NULL DEFAULT '0' COMMENT '区域id',
+  `is_admin_order` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `is_notice_order` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `is_notice_queue` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `is_notice_service` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `is_notice_boss` tinyint(1) NOT NULL DEFAULT '0',
+  `remark` varchar(1000) NOT NULL DEFAULT '' COMMENT '备注',
+  `lat` decimal(18,10) NOT NULL DEFAULT '0.0000000000' COMMENT '经度',
+  `lng` decimal(18,10) NOT NULL DEFAULT '0.0000000000' COMMENT '纬度',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_assess` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `good_id` int(11) NOT NULL COMMENT '商品',
+  `store_id` int(11) NOT NULL,
+  `spec` varchar(100) NOT NULL COMMENT '规格',
+  `user_img` varchar(200) NOT NULL COMMENT '用户头像',
+  `user_name` varchar(20) NOT NULL COMMENT '用户昵称',
+  `order_num` varchar(30) NOT NULL COMMENT '订单号',
+  `score` int(11) NOT NULL COMMENT '分数',
+  `content` text NOT NULL COMMENT '评价内容',
+  `img` text NOT NULL COMMENT '图片',
+  `cerated_time` varchar(20) NOT NULL COMMENT '创建时间',
+  `user_id` int(11) NOT NULL COMMENT '用户ID',
+  `uniacid` varchar(50) NOT NULL,
+  `reply` varchar(1000) NOT NULL COMMENT '商家回复',
+  `status` int(4) NOT NULL COMMENT '评价状态1，未回复，2已回复',
+  `reply_time` datetime NOT NULL COMMENT '回复时间',
+  `good_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_coupons` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '优惠券名称',
+  `type` int(11) NOT NULL COMMENT '1.优惠券2.代金券',
+  `full` int(11) NOT NULL COMMENT '满',
+  `reduction` int(11) NOT NULL COMMENT '减',
+  `start_time` varchar(20) NOT NULL COMMENT '开始时间',
+  `end_time` varchar(20) NOT NULL COMMENT '结束时间',
+  `store_id` int(11) NOT NULL COMMENT '商家id',
+  `uniacid` int(11) NOT NULL,
+  `details` varchar(100) NOT NULL,
+  `level_type` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_czhd` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `full` int(11) NOT NULL,
+  `reduction` int(11) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_czorder` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `code` varchar(100) NOT NULL,
+  `form_id` varchar(100) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `money2` decimal(10,2) NOT NULL,
+  `state` int(11) NOT NULL COMMENT '1.待支付2已支付',
+  `uniacid` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `note` varchar(50) NOT NULL,
+  `pay_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_dyj` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `dyj_title` varchar(50) NOT NULL COMMENT '打印机标题',
+  `dyj_id` varchar(50) NOT NULL COMMENT '打印机编号',
+  `dyj_key` varchar(50) NOT NULL COMMENT '打印机key',
+  `uniacid` varchar(50) NOT NULL,
+  `type` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `state` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `mid` varchar(100) NOT NULL,
+  `api` varchar(100) NOT NULL,
+  `yy_id` varchar(20) NOT NULL,
+  `token` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_formid` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `form_id` varchar(200) NOT NULL,
+  `time` int(11) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_goods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL COMMENT '商品名称',
+  `type_id` int(11) NOT NULL COMMENT '商品分类',
+  `img` text NOT NULL COMMENT '商品图片',
+  `money` decimal(10,2) NOT NULL COMMENT '售价',
+  `money2` decimal(10,2) NOT NULL COMMENT '原价',
+  `is_show` int(11) NOT NULL DEFAULT '1' COMMENT '1.上架2.下架',
+  `uniacid` int(11) NOT NULL COMMENT '小程序id',
+  `inventory` int(11) NOT NULL COMMENT '库存',
+  `details` text NOT NULL COMMENT '详情',
+  `store_id` int(11) NOT NULL COMMENT '商家id',
+  `sales` int(11) NOT NULL COMMENT '销量',
+  `logo` varchar(100) NOT NULL,
+  `num` int(11) NOT NULL,
+  `is_gg` int(11) NOT NULL DEFAULT '2' COMMENT '是否开启规格',
+  `quantity` int(11) NOT NULL,
+  `t_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_help` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `question` varchar(200) NOT NULL COMMENT '标题',
+  `answer` text NOT NULL COMMENT '回答',
+  `sort` int(4) NOT NULL COMMENT '排序',
+  `uniacid` varchar(50) NOT NULL,
+  `created_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_jfgoods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL COMMENT '名称',
+  `img` varchar(100) NOT NULL,
+  `money` int(11) NOT NULL COMMENT '价格',
+  `type_id` int(11) NOT NULL COMMENT '分类id',
+  `goods_details` text NOT NULL,
+  `process_details` text NOT NULL,
+  `attention_details` text NOT NULL,
+  `number` int(11) NOT NULL COMMENT '数量',
+  `time` varchar(50) NOT NULL COMMENT '期限',
+  `is_open` int(11) NOT NULL COMMENT '1.开启2关闭',
+  `type` int(11) NOT NULL COMMENT '1.余额2.实物',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `uniacid` int(11) NOT NULL,
+  `hb_moeny` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_jfmx` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `score` int(11) NOT NULL COMMENT '积分',
+  `type` int(11) NOT NULL COMMENT '1.加2减',
+  `cerated_time` varchar(20) NOT NULL,
+  `note` varchar(20) NOT NULL COMMENT '备注',
+  `uniacid` varchar(20) NOT NULL COMMENT '小程序id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_jfrecord` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `good_id` int(11) NOT NULL COMMENT '商品id',
+  `time` varchar(20) NOT NULL COMMENT '兑换时间',
+  `user_name` varchar(20) NOT NULL COMMENT '用户地址',
+  `user_tel` varchar(20) NOT NULL COMMENT '用户电话',
+  `address` varchar(200) NOT NULL COMMENT '地址',
+  `note` varchar(20) NOT NULL,
+  `integral` int(11) NOT NULL COMMENT '积分',
+  `good_name` varchar(50) NOT NULL COMMENT '商品名称',
+  `good_img` varchar(100) NOT NULL,
+  `state` int(11) NOT NULL DEFAULT '2' COMMENT '1.未处理 2.已处理',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_jftype` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `img` varchar(100) NOT NULL,
+  `num` int(11) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_level` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '等级名称',
+  `img` varchar(200) NOT NULL COMMENT '等级背景',
+  `details` text NOT NULL COMMENT '等级说明',
+  `discount` decimal(10,1) NOT NULL COMMENT '折扣',
+  `level` int(11) NOT NULL COMMENT '级别',
+  `threshold` decimal(10,2) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  `my_img` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_mallset` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
+  `freight` decimal(10,2) NOT NULL COMMENT '运费',
+  `full` decimal(10,2) NOT NULL COMMENT '满多少包邮',
+  `uniacid` int(11) NOT NULL,
+  `is_zt` int(11) NOT NULL DEFAULT '2' COMMENT '是否开启自提',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_mynumcard` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `card_id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  `lq_time` varchar(20) NOT NULL,
+  `type` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_nav` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL COMMENT '标题',
+  `title_color` varchar(20) NOT NULL COMMENT '标题选中颜色',
+  `title_color2` varchar(20) NOT NULL COMMENT '标题未选中颜色',
+  `logo` varchar(200) NOT NULL COMMENT '选中图片',
+  `logo2` varchar(200) NOT NULL COMMENT '未选中图片',
+  `url` varchar(200) NOT NULL COMMENT '跳转链接',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `state` int(11) NOT NULL DEFAULT '1' COMMENT '1开启2关闭',
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_numcard` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `number` int(11) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  `num` int(11) NOT NULL,
+  `img` varchar(100) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `store_id` varchar(50) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1.次卡',
+  `details` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_numcard_record` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `card_id` int(11) NOT NULL COMMENT '次卡id',
+  `time` varchar(20) NOT NULL COMMENT '时间',
+  `uniacid` int(11) NOT NULL,
+  `hx_id` int(11) NOT NULL COMMENT '核销员id',
+  `num` int(11) NOT NULL COMMENT '次数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_numcardorder` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `code` varchar(100) NOT NULL,
+  `form_id` varchar(100) NOT NULL,
+  `state` int(11) NOT NULL COMMENT '1.待付款2.已付款',
+  `money` decimal(10,2) NOT NULL,
+  `card_id` int(11) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  `pay_type` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_order` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_num` varchar(50) NOT NULL COMMENT '订单号',
+  `price` decimal(10,2) NOT NULL COMMENT '总价',
+  `money` decimal(10,2) NOT NULL COMMENT '付款金额',
+  `preferential` decimal(10,2) NOT NULL COMMENT '折扣金额',
+  `preferential2` decimal(10,2) NOT NULL COMMENT '优惠券',
+  `user_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `time` varchar(20) NOT NULL COMMENT '下单时间',
+  `uniacid` int(11) NOT NULL,
+  `pay_type` int(11) NOT NULL COMMENT '1.微信支付2余额支付',
+  `coupons_id` int(11) NOT NULL,
+  `state` int(11) NOT NULL DEFAULT '2',
+  `code` varchar(100) NOT NULL,
+  `form_id` varchar(100) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `pay_type2` varchar(10) NOT NULL,
+  `note` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_ordergoods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `img` varchar(300) NOT NULL COMMENT '商品图片',
+  `number` int(11) NOT NULL COMMENT '数量',
+  `order_id` int(11) NOT NULL COMMENT '订单id',
+  `name` varchar(50) NOT NULL COMMENT '商品名称',
+  `money` decimal(10,2) NOT NULL COMMENT '商品金额',
+  `uniacid` varchar(50) NOT NULL,
+  `good_id` int(11) NOT NULL COMMENT '商品id',
+  `spec` varchar(50) NOT NULL COMMENT '规格',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_qbmx` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `money` decimal(10,2) NOT NULL COMMENT '金额',
+  `type` int(11) NOT NULL COMMENT '1.加2减',
+  `time` varchar(20) NOT NULL COMMENT '创建时间',
+  `note` varchar(20) NOT NULL COMMENT '备注',
+  `uniacid` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_shopcar` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `good_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `num` int(11) NOT NULL,
+  `spec` varchar(100) NOT NULL,
+  `combination_id` int(11) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_shoporder` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_num` varchar(100) NOT NULL COMMENT '订单号',
+  `money` decimal(10,2) NOT NULL COMMENT '金额',
+  `price` decimal(10,2) NOT NULL COMMENT '原价',
+  `preferential` decimal(10,2) NOT NULL COMMENT '折扣金额',
+  `preferential2` decimal(10,2) NOT NULL COMMENT '优惠金额',
+  `user_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  `pay_type` int(11) NOT NULL COMMENT '付款方式',
+  `coupons_id` int(11) NOT NULL COMMENT '优惠券id',
+  `state` int(11) NOT NULL COMMENT '1.待支付2.已支付3.待配送4.配送中5.已完成6.已评价7.退款中8.退款通过9.退款拒绝',
+  `code` varchar(100) NOT NULL,
+  `form_id` varchar(100) NOT NULL,
+  `note` varchar(100) NOT NULL COMMENT '备注',
+  `address` varchar(100) NOT NULL COMMENT '地址',
+  `tel` varchar(20) NOT NULL COMMENT '电话',
+  `user_name` varchar(20) NOT NULL COMMENT '姓名',
+  `is_zt` int(11) NOT NULL COMMENT '1.是 2.不是 (自提)',
+  `is_del` int(11) NOT NULL DEFAULT '2' COMMENT '1.删除 2.未删除',
+  `pay_time` int(11) NOT NULL COMMENT '付款时间',
+  `freight` decimal(10,2) NOT NULL COMMENT '运费',
+  `kd_num` varchar(50) NOT NULL COMMENT '快递单号',
+  `complete_time` varchar(20) NOT NULL COMMENT '完成时间',
+  `kd_name` varchar(20) NOT NULL,
+  `zt_time` varchar(20) NOT NULL,
+  `form_id2` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_spec` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '规格名称',
+  `good_id` int(11) NOT NULL COMMENT '商品id',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `uniacid` int(11) NOT NULL COMMENT '小程序id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_spec_combination` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `money` decimal(10,2) NOT NULL,
+  `combination` varchar(50) NOT NULL,
+  `number` int(11) NOT NULL,
+  `good_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_spec_val` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL COMMENT '规格属性名称',
+  `spec_id` int(11) NOT NULL COMMENT '规格id',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `uniacid` int(11) NOT NULL,
+  `good_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_stinfo` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL,
+  `pwd` varchar(20) NOT NULL COMMENT '密码',
+  `state` int(11) NOT NULL COMMENT '1.绑定2.未绑定',
+  `term` int(11) NOT NULL COMMENT '期限',
+  `type_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_stlist` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time` varchar(20) NOT NULL COMMENT '时间',
+  `number` int(11) NOT NULL COMMENT '数量',
+  `term` int(11) NOT NULL COMMENT '期限',
+  `uniacid` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_store` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '商家名称',
+  `logo` varchar(200) NOT NULL COMMENT '商家logo',
+  `address` varchar(200) NOT NULL COMMENT '商家地址',
+  `tel` varchar(20) NOT NULL COMMENT '电话',
+  `coordinates` varchar(50) NOT NULL COMMENT '坐标',
+  `wallet` decimal(10,2) NOT NULL COMMENT '钱包',
+  `username` varchar(20) NOT NULL COMMENT '账号',
+  `password` varchar(20) NOT NULL COMMENT '密码',
+  `is_default` int(11) NOT NULL DEFAULT '2' COMMENT '1.是2.否',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `sentiment` int(11) NOT NULL COMMENT '人气',
+  `uniacid` int(11) NOT NULL,
+  `announcement` varchar(200) NOT NULL COMMENT '公告',
+  `appid` varchar(20) NOT NULL,
+  `xcx_name` varchar(20) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '1',
+  `md_img` varchar(100) NOT NULL,
+  `md_img2` varchar(100) NOT NULL,
+  `cz_img` varchar(300) NOT NULL,
+  `sms_tel` varchar(20) NOT NULL,
+  `admin_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_storead` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `logo` varchar(300) NOT NULL COMMENT '图片',
+  `src` varchar(300) NOT NULL COMMENT '链接地址',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  `orderby` int(4) NOT NULL COMMENT '排序',
+  `status` int(4) NOT NULL COMMENT '状态1.启用，2禁用',
+  `store_id` int(11) NOT NULL,
+  `appid` varchar(30) NOT NULL,
+  `title` varchar(50) NOT NULL COMMENT '幻灯片标题',
+  `xcx_name` varchar(30) NOT NULL COMMENT '小程序名称',
+  `uniacid` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
+  `src2` varchar(200) NOT NULL COMMENT '外部',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_system` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `appid` varchar(100) NOT NULL,
+  `appsecret` varchar(100) NOT NULL,
+  `mchid` varchar(20) NOT NULL COMMENT '商户号',
+  `wxkey` varchar(100) NOT NULL COMMENT '商户秘钥',
+  `url_name` varchar(20) NOT NULL COMMENT '后台名称',
+  `details` text NOT NULL COMMENT '关于我们',
+  `url_logo` varchar(100) NOT NULL COMMENT '后台logo',
+  `link_name` varchar(20) NOT NULL COMMENT '平台名称',
+  `link_logo` varchar(100) NOT NULL COMMENT '平台logo',
+  `link_tel` varchar(20) NOT NULL COMMENT '平台电话',
+  `link_color` varchar(20) NOT NULL COMMENT '平台颜色 ',
+  `bq_name` varchar(20) NOT NULL COMMENT '版权名称',
+  `bq_logo` varchar(100) NOT NULL COMMENT '版权logo',
+  `support` varchar(20) NOT NULL COMMENT '技术支持',
+  `tz_appid` varchar(100) NOT NULL COMMENT '跳转appid',
+  `tz_name` varchar(20) NOT NULL COMMENT '跳转名称',
+  `uniacid` int(11) NOT NULL,
+  `mapkey` varchar(100) NOT NULL,
+  `appkey` varchar(50) NOT NULL,
+  `tpl_id` varchar(50) NOT NULL,
+  `is_sms` int(11) NOT NULL DEFAULT '2' COMMENT '1.开启2关闭',
+  `is_yue` int(11) NOT NULL DEFAULT '2' COMMENT '1.开启2.关闭',
+  `tid` varchar(200) NOT NULL COMMENT '客户买单通知',
+  `tid2` varchar(200) NOT NULL COMMENT '客户开卡通知',
+  `follow` varchar(200) NOT NULL,
+  `opencard` int(11) NOT NULL,
+  `integral` int(11) NOT NULL,
+  `is_jf` int(11) NOT NULL DEFAULT '1',
+  `is_jfpay` int(11) NOT NULL DEFAULT '1',
+  `jf_proportion` int(11) NOT NULL DEFAULT '10',
+  `apiclient_cert` text NOT NULL,
+  `apiclient_key` text NOT NULL,
+  `tid3` varchar(200) NOT NULL,
+  `model` int(11) NOT NULL DEFAULT '2',
+  `mr_logo` varchar(200) NOT NULL,
+  `qhmd_img` varchar(100) NOT NULL,
+  `qhmd_name` varchar(20) NOT NULL,
+  `qhmd_url` varchar(100) NOT NULL,
+  `qhmd_type` int(11) NOT NULL,
+  `qhmd_url2` varchar(100) NOT NULL,
+  `qhmd_appid` varchar(50) NOT NULL,
+  `qhmd_appidname` varchar(20) NOT NULL,
+  `is_sc` int(11) NOT NULL DEFAULT '2',
+  `vip_qx` int(11) NOT NULL DEFAULT '2',
+  `vip_xy` text NOT NULL,
+  `md_xs` int(11) NOT NULL DEFAULT '1',
+  `is_stk` int(11) NOT NULL DEFAULT '1',
+  `sms_tel` varchar(20) NOT NULL,
+  `tpl2_id` varchar(50) NOT NULL,
+  `tpl3_id` varchar(50) NOT NULL,
+  `tid4` varchar(100) NOT NULL,
+  `is_ck` int(11) NOT NULL DEFAULT '1',
+  `sj_tid` varchar(200) NOT NULL,
+  `kc_tid` varchar(100) NOT NULL,
+  `yue_tid` varchar(100) NOT NULL,
+  `jf_tid` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_timeorder` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `day` int(11) NOT NULL,
+  `state` int(11) NOT NULL COMMENT '1.未付款2.已付款',
+  `code` varchar(50) NOT NULL,
+  `form_id` varchar(50) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `pay_time` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_topnav` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `logo` varchar(300) NOT NULL COMMENT '图片',
+  `src` varchar(300) NOT NULL COMMENT '链接地址',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  `orderby` int(4) NOT NULL COMMENT '排序',
+  `status` int(4) NOT NULL COMMENT '状态1.启用，2禁用',
+  `type` int(11) NOT NULL COMMENT '1首页幻灯片 2.开屏广告',
+  `store_id` int(11) NOT NULL,
+  `appid` varchar(30) NOT NULL,
+  `title` varchar(50) NOT NULL COMMENT '幻灯片标题',
+  `xcx_name` varchar(30) NOT NULL COMMENT '小程序名称',
+  `uniacid` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
+  `src2` varchar(200) NOT NULL COMMENT '外部',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_type` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL COMMENT '分类名称',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `uniacid` int(11) NOT NULL COMMENT '小程序id',
+  `state` int(11) NOT NULL DEFAULT '1',
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_type2` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(50) NOT NULL COMMENT '分类名称',
+  `num` int(11) NOT NULL COMMENT '排序',
+  `uniacid` int(11) NOT NULL COMMENT '小程序id',
+  `img` varchar(100) NOT NULL COMMENT '图片',
+  `type_id` int(11) NOT NULL COMMENT '分类id',
+  `state` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `openid` varchar(100) NOT NULL,
+  `img` varchar(200) NOT NULL,
+  `time` varchar(20) NOT NULL COMMENT '注册时间',
+  `nickname` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
+  `name` varchar(20) NOT NULL COMMENT '姓名',
+  `tel` varchar(20) NOT NULL COMMENT '电话',
+  `birthday` varchar(20) NOT NULL COMMENT '生日',
+  `address` varchar(200) NOT NULL COMMENT '地址',
+  `wallet` decimal(10,2) NOT NULL COMMENT '钱包',
+  `integral` int(11) NOT NULL COMMENT '积分',
+  `email` varchar(30) NOT NULL COMMENT '邮箱',
+  `education` varchar(20) NOT NULL COMMENT '学历',
+  `industry` varchar(20) NOT NULL COMMENT '行业',
+  `hobby` varchar(20) NOT NULL COMMENT '爱好',
+  `grade` int(11) NOT NULL COMMENT '等级',
+  `vip_code` varchar(20) NOT NULL COMMENT '会员卡号',
+  `code_time` int(11) NOT NULL COMMENT '开卡/升卡时间',
+  `uniacid` int(11) NOT NULL,
+  `vip_number` varchar(20) NOT NULL,
+  `cumulative` decimal(10,2) NOT NULL COMMENT '总累计金额',
+  `level_cumulative` decimal(10,2) NOT NULL COMMENT '等级累计金额',
+  `vip_time` int(11) NOT NULL,
+  `note` varchar(100) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_useradd` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `address` varchar(50) NOT NULL,
+  `area` varchar(50) NOT NULL,
+  `user_name` varchar(20) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `tel` varchar(20) NOT NULL,
+  `is_default` int(11) NOT NULL COMMENT '1.是 2.不是 (默认)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_usercoupons` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `coupons_id` int(11) NOT NULL,
+  `time` varchar(20) NOT NULL COMMENT '领取时间',
+  `use_time` varchar(20) NOT NULL COMMENT '使用时间',
+  `state` int(11) NOT NULL COMMENT '1.使用2.未使用',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_zhvip_vipset` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `days` int(11) NOT NULL,
+  `money` decimal(10,2) NOT NULL,
+  `num` int(11) NOT NULL,
+  `uniacid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_zhvip_account`;
+DROP TABLE IF EXISTS `ims_zhvip_ad`;
+DROP TABLE IF EXISTS `ims_zhvip_admin`;
+DROP TABLE IF EXISTS `ims_zhvip_assess`;
+DROP TABLE IF EXISTS `ims_zhvip_coupons`;
+DROP TABLE IF EXISTS `ims_zhvip_czhd`;
+DROP TABLE IF EXISTS `ims_zhvip_czorder`;
+DROP TABLE IF EXISTS `ims_zhvip_dyj`;
+DROP TABLE IF EXISTS `ims_zhvip_formid`;
+DROP TABLE IF EXISTS `ims_zhvip_goods`;
+DROP TABLE IF EXISTS `ims_zhvip_help`;
+DROP TABLE IF EXISTS `ims_zhvip_jfgoods`;
+DROP TABLE IF EXISTS `ims_zhvip_jfmx`;
+DROP TABLE IF EXISTS `ims_zhvip_jfrecord`;
+DROP TABLE IF EXISTS `ims_zhvip_jftype`;
+DROP TABLE IF EXISTS `ims_zhvip_level`;
+DROP TABLE IF EXISTS `ims_zhvip_mallset`;
+DROP TABLE IF EXISTS `ims_zhvip_mynumcard`;
+DROP TABLE IF EXISTS `ims_zhvip_nav`;
+DROP TABLE IF EXISTS `ims_zhvip_numcard`;
+DROP TABLE IF EXISTS `ims_zhvip_numcard_record`;
+DROP TABLE IF EXISTS `ims_zhvip_numcardorder`;
+DROP TABLE IF EXISTS `ims_zhvip_order`;
+DROP TABLE IF EXISTS `ims_zhvip_ordergoods`;
+DROP TABLE IF EXISTS `ims_zhvip_qbmx`;
+DROP TABLE IF EXISTS `ims_zhvip_shopcar`;
+DROP TABLE IF EXISTS `ims_zhvip_shoporder`;
+DROP TABLE IF EXISTS `ims_zhvip_spec`;
+DROP TABLE IF EXISTS `ims_zhvip_spec_combination`;
+DROP TABLE IF EXISTS `ims_zhvip_spec_val`;
+DROP TABLE IF EXISTS `ims_zhvip_stinfo`;
+DROP TABLE IF EXISTS `ims_zhvip_stlist`;
+DROP TABLE IF EXISTS `ims_zhvip_store`;
+DROP TABLE IF EXISTS `ims_zhvip_storead`;
+DROP TABLE IF EXISTS `ims_zhvip_system`;
+DROP TABLE IF EXISTS `ims_zhvip_timeorder`;
+DROP TABLE IF EXISTS `ims_zhvip_topnav`;
+DROP TABLE IF EXISTS `ims_zhvip_type`;
+DROP TABLE IF EXISTS `ims_zhvip_type2`;
+DROP TABLE IF EXISTS `ims_zhvip_user`;
+DROP TABLE IF EXISTS `ims_zhvip_useradd`;
+DROP TABLE IF EXISTS `ims_zhvip_usercoupons`;
+DROP TABLE IF EXISTS `ims_zhvip_vipset`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+
+</manifest>

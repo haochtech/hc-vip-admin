@@ -1,0 +1,188 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcss.css">
+<style type="text/css">
+    .username>img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+        border:1px solid #999;
+    }
+    .xiugai{
+        color: #44abf7;
+        margin-left: 10px;
+    }
+</style>
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li ><a href="{php echo $this->createWebUrl('user')}">会员管理</a></li>
+    <li class="active"><a href="javascript:void(0);">编辑会员</a></li>
+</ul>
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+        <!--<input type="hidden" name="parentid" value="{$parent['id']}" />-->
+        <div class="panel panel-default ygdefault">
+            <div class="panel-heading wyheader">
+                编辑信息
+            </div>
+            <div class="panel-body">                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">粉丝</label>
+                    <div class="col-sm-5 username">
+                        <img src="{$item['img']}">
+                        <span>{$item['name']}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">openid</label>
+                    <div class="col-sm-5" style="line-height: 30px;">                    
+                       {$item['openid']}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">真实姓名</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="name" class="form-control" value="{$item['name']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">手机号</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="tel" class="form-control" value="{$item['tel']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label" style="padding-right: 15px;">会员等级</label>
+                    <div class="col-sm-5">
+                        <select name="grade" class="form-control" id="groupid">
+                            {loop $level $row}
+                            <option value="{$row['id']}" {if $item['grade']==$row['id']}selected{/if}>{$row['name']}</option>
+                            {/loop}
+                        </select>
+                      <!--  <font color="red">*请谨慎修改</font> -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">会员卡号</label>
+                    <div class="col-sm-5" style="line-height: 30px;">                    
+                       {$item['vip_code']}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">会员编号</label>
+                    <div class="col-sm-5" style="line-height: 30px;">                    
+                       {$item['vip_number']}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">可用余额</label>
+                    <div class="col-sm-5" style="line-height: 30px;">
+                       {$item['wallet']}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">可用积分</label>
+                    <div class="col-sm-5" style="line-height: 30px;">
+                       {$item['integral']}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">注册时间</label>
+                    <div class="col-sm-5" style="line-height: 30px;">                    
+                       {php echo date("Y-m-d H:i:s",$item['time']);}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">会员到期时间</label>
+                    <div class="col-sm-10">
+                        {php echo tpl_form_field_date('vip_time',date('Y-m-d H:i:s',$item['vip_time']),true)}
+                    </div>
+                </div>
+                
+                <!-- <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">姓名</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="name" class="form-control" value="{$item['name']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">电话</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="tel" class="form-control" value="{$item['tel']}" />
+                    </div>
+                </div>   -->
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">生日</label>
+                    <div class="col-sm-5">
+                       {php echo tpl_form_field_date(birthday,$item['birthday']);}
+                    </div>
+                </div>        
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">地址</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="address" class="form-control" value="{$item['address']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">邮箱</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="email" class="form-control" value="{$item['email']}" />
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">学历</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="education" class="form-control" value="{$item['education']}" />
+                    </div>
+                </div>    
+                  <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">行业</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="industry" class="form-control" value="{$item['industry']}" />
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">爱好</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="hobby" class="form-control" value="{$item['hobby']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">备注</label>
+                    <div class="col-sm-5">
+                       <input type="text" name="note" class="form-control" value="{$item['note']}" />
+                    </div>
+                </div>
+       <!--          <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">成交订单数</label>
+                    <div class="col-sm-5" style="line-height: 30px;">                    
+                        {$ordernum}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">成交余额</label>
+                    <div class="col-sm-5" style="line-height: 30px;">                    
+                       {$order['total']}
+                    </div>
+                </div> -->
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" value="提交" class="btn col-lg-3" style="color: white;background-color: #44ABF7;"/>
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            <input type="hidden" name="id" value="{$item['id']}" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#frame-1").show();
+        $("#yframe-1").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

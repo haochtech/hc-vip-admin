@@ -1,0 +1,56 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li class="active"><a href="javascript:void(0);">充值记录</a></li>
+</ul>
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          充值记录
+        </div>
+        <div class="panel-body" style="padding: 0px 15px;">
+          <div class="row">
+            <table class="yg5_tabel col-md-12">
+              <tr class="yg5_tr1">
+              <td class="store_td1">门店名称</td>
+                <td class="store_td1">用户头像</td>
+                <td>用户名称</td>
+                <td>充值金额</td>
+                <td>备注</td>  
+                <td>充值时间</td>
+                      </tr>
+                      {loop $list $key $item}
+                      <tr class="yg5_tr2">
+                       <td >{if $item['store_name']}{$item['store_name']}{else}平台{/if}</td>
+                        <td ><img style="height:40px;width:40px" src="{$item['img']}"/></td>
+                         <td >{$item['name']}</td>
+                        <td>{$item['money']}</td>
+                        <td>{$item['note']}</td>
+                        <td>{$item['time']}</td>
+                  </td>
+                </tr>
+                {/loop}
+                {if empty($list)}
+                <tr class="yg5_tr2">
+                  <td colspan="9">
+                    暂无充值记录
+                  </td>
+                </tr>
+                {/if}      
+              </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-right we7-margin-top">
+{$pager}
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-6").show();
+        $("#yframe-6").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

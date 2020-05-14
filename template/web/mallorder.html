@@ -1,0 +1,362 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+<style type="text/css">
+    .ygrow{margin-top: 20px;}
+    .yg5_key>div{float: left;line-height: 34px;}
+    .store_td1{height: 45px;}
+    .store_list_img{width: 60px;height: 60px;}
+    .yg5_tabel{border-color: #e5e5e5;outline: 1px solid #e5e5e5;text-align: center;}
+    .yg5_tr2>td{padding: 15px 8px;border: 1px solid #e5e5e5;}
+    .yg5_tr1>td{
+        border: 1px solid #e5e5e5;
+        background-color: #FAFAFA;
+        font-weight: bold;
+    }
+    .ordersucess{background-color: #44ABF7;color: white;}
+    .ordersucess:hover{background-color: #44ABF7;color: white;}
+    .yg5_btn{background-color: #EEEEEE;color: #333;border: 1px solid #E4E4E4;border-radius: 6px;width: 100px;height: 34px;}
+    .inorderbtn2>span,.inorderbtn>button,.inorderbtn>a>button{margin-bottom: 10px;}
+    .orfont1{font-weight: bold;font-size: 24px;}
+    .orfont2{color: #F5B340;font-size: 16px;margin-left: 15px;}
+    .orderback{background-color: #FAFAFA;height: 50px;margin-bottom: 15px;padding: 10px;}
+    .ordermain{font-size: 14px;width: 100%;}
+    .orfont3{font-size: 20px;font-weight: bold;}
+    .orfont4{font-size: 12px;color: #999;}
+    .orderconfirm{border:1px solid #44ABF7;color: #44ABF7;padding: 5px 15px;border-radius: 6px;cursor: pointer;margin-right: 10px;}
+    .orderconfirm:hover{background-color: #44ABF7;color: white;}
+    .orderconfirm2{color: #fff;padding: 3px 10px;border-radius: 6px;margin-right: 10px;font-size: 12px;margin-top: 5px;background-color: #44ABF7;}
+    .orderback2{border-bottom:1px solid #E9E9E9;margin-bottom: 10px;padding-bottom: 10px;}
+    .orderback3{margin-bottom: 10px;padding-bottom: 10px;}
+    .orderback2>div>p{margin-bottom: 5px;}
+    .orderdish{margin-bottom: 10px;height: 15px;width: 100%;}
+    .orderdish>div{float: left;margin-right: 50px;}
+    .orderbox1,.orderdish1{width: 250px;}
+    .orderdish>div:nth-child(2){width: 80px;}
+    .orderdish>div:nth-child(3){width: 80px;}
+    .orderbox2,.orderdish>div:nth-child(4){width: 80px;}
+    .orderbox2{margin-left: 310px;}
+    .orderaccount{width: 100%;height: 25px;}
+    .orfont5{color: #44ABF7;font-size: 14px;}
+    .orfont6{font-size: 12px;color: #666;}
+    .orfont7{font-weight: bold;font-size: 15px;}
+    .dlorfont7{font-size: 18px;color: #44ABF7;}
+    .orfont8{color: #44ABF7;}
+    .orfont9{color: #666;}
+    .orderpanel1{width: 50%;display: inline-block;}
+    .orderpanel2{width: 30%;display: inline-block;margin-left: 30px;}
+    .ordertelimg{width: 20px;height: 20px;}
+    .ordertelimg1{color: #44ABF7;font-size: 14px;}
+    .ordername{height: 30px;width: 100%;margin-bottom: 5px;}
+    .ordername1{font-size: 20px;font-weight: bold;}
+    .orbeizhu{color: #FF7712;}
+    .ordertime{margin-right: 10px;}
+    .orfont10{color: #999;}
+    .orderbtn{border: #FF7F50 1px solid;color: #FF7F50;background-color: #fff;margin-top: -10px;}
+    .orderbtn:hover{background-color: #FF7F50;color: white;}
+    .ortypeimg{position: absolute;left: 27%;top:53%;z-index: 10;opacity: 0.2;width: 150px;height: 150px;}
+    .ortypeimg>img{width: 100%;height: 100%;}
+    .ortypeimg2{position: absolute;left: 27%;top:53%;z-index: 10;opacity: 0.4;width: 150px;height: 150px;}
+    .ortypeimg2>img{width: 100%;height: 100%;}
+    .orderwu{text-align: center;padding: 20px 0px;}
+    .wufont1{font-size: 18px;color: #666;margin-top: 20px;}
+    .orderconhui{background-color: grey;color: white;}
+    .orfontyue1{text-indent: 4em;}
+    
+</style>
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div> 
+    <li {if $type=='now'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>now));}">待接单</a></li>
+    <li {if $type=='delivery'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>delivery));}">待送达</a></li>
+    <li {if $type=='wait'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>wait));}">待支付</a></li>
+    <li {if $type=='complete'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>complete));}">已完成</a></li>
+    <li {if $type=='zt'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>zt));}">自提订单</a></li>
+    <li {if $type=='cancel'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>cancel));}">取消/退款</a></li> 
+    <li {if $type=='all'} class="active" {/if}><a href="{php echo $this->createWebUrl('mallorder',array('type'=>all));}">全部订单</a></li>
+</ul>
+<div class="row ygrow">
+    <div class="col-lg-12">
+        <form action="" method="get" class="col-md-4">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="zh_vip" />
+            <input type="hidden" name="do" value="mallorder" />
+            <div class="input-group" style="width: 300px;">
+                <input type="text" name="keywords" class="form-control" placeholder="请输入姓名/订单编号/昵称/卡号/实体卡列表名称">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit" value="查找"/>
+                </span>
+            </div>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+        </form>
+        <form action="" method="get" class="col-md-4">
+                   <input type="hidden" name="c" value="site" />
+                   <input type="hidden" name="a" value="entry" />
+                   <input type="hidden" name="m" value="zh_vip" />
+                   <input type="hidden" name="do" value="mallorder" />
+            <div class="input-group" style="width: 100px">
+                {php echo tpl_form_field_daterange('time',array(),true);}
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit2" value="查找"/>
+                </span>
+            </div><!-- /input-group -->
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+        </form>
+
+
+
+        <form action="{php echo $this->createWebUrl('mallorder');}" method="POST" class="col-md-4">
+            <div class="input-group" style="width: 100px">
+                {php echo tpl_form_field_daterange('dc_time');}
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit4" value="导出"/>
+                </span>
+            </div><!-- /input-group -->
+            <input type="hidden" name="store_id" value="{$storeid}"/>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+        </form>
+    </div><!-- /.col-lg-6 -->
+</div>  
+<div class="main ordermain">
+<div class="row">
+    <div class="col-md-8">
+    {if !$data3}
+        <div class="panel panel-default">
+            <div class="orderwu">
+                <img src="../addons/zh_vip/template/images/noorder.png">
+                <p class="wufont1">暂无指定订单</p>
+                <p class="orfont10">暂时没有筛选条件的订单，稍后再来看看吧！</p>
+            </div>
+        </div>
+        {/if}
+{loop $data3 $key $item}
+        <div class="panel panel-default">
+            <div class="panel-body" style="padding: 0px 15px;">
+                <div class="row" style="position: relative;">
+                {if $item['order']['state']==1}
+                    <div class="ortypeimg">
+                        <img src="../addons/zh_vip/template/images/daizhifu.png">
+                    </div>
+                    {else}
+                    <div class="ortypeimg2">
+                        <img src="../addons/zh_vip/template/images/yizhifu.png">
+                    </div>
+                    {/if}
+                    <div class="col-md-12 orderback">
+                        <div class="left">
+                            <span class="orfont1 orfont8">#{$item['order']['id']}</span>
+                            <span>{if $item['order']['is_zt']==1}到店自提|{$item['order']['zt_time']}{/if}</span>
+
+                       <!--      <a href="{php echo $this->createWebUrl('order',array('op'=>'dy','order_id'=>$item['order']['id']));}"><button class="btn btn-xs orderbtn">打印小票</button></a> -->
+                        </div>
+                        <div class="right">
+                        {if $item['order']['state']==1}
+                            <div class="left orderconfirm2">待支付</div>
+                        {elseif $item['order']['state']==2}
+                            <div class="left orderconfirm2">待发货</div>
+                            <a href="#" data-toggle="modal" data-target="#myModalb{$item['order']['id']}"><div class="left orderconfirm">点击发货</div></a>
+                        {elseif $item['order']['state']==3}
+                            <div class="left orderconfirm2">待收货</div>
+                            <a href="{php echo $this->createWebUrl('mallorder',array('op'=>'wc','id'=>$item['order']['id']));}"><div class="left orderconfirm">点击收货</div></a>
+                            
+                        {elseif $item['order']['state']==4}
+                            <div class="left label label-xs orderconhui">已完成</div>
+                        {elseif $item['order']['state']==5}
+                            <div class="left orderconfirm2">已评价</div>
+                        {elseif $item['order']['state']==6}
+                            <div class="left orderconfirm2">待退款</div>
+                            <a href="{php echo $this->createWebUrl('mallorder',array('op'=>'tg','id'=>$item['order']['id']));}"><div class="left orderconfirm">通过退款</div></a>
+                            <a href="{php echo $this->createWebUrl('mallorder',array('op'=>'jj','id'=>$item['order']['id']));}"><div class="left orderconfirm">拒绝退款</div></a>
+                        {elseif $item['order']['state']==7}
+                            <div class="left orderconfirm2">退款成功</div>
+                        {elseif $item['order']['state']==8}
+                            <div class="left orderconfirm2">退款拒绝</div>
+                        {/if}
+                        </div>                        
+                    </div>
+                    <div class="col-md-12 orderback2">
+                        <div class="ordername">
+                            <div class="left ordername1">{$item['order']['user_name']} &nbsp;&nbsp;</div><div class="left orfont9">(会员名称：{$item['order']['nickname']}  {if $item['order']['vip_code']}卡号：{$item['order']['vip_code']} {/if}  {if $item['order']['st_name']}实体卡列表名称：{$item['order']['st_name']}{/if})</div>
+                            <a href="{php echo $this->createWebUrl('mallorderinfo',array('id'=>$item['order']['id']));}"><div class="right btn btn-sm btn-default" style="border:none;">查看详情</div></a>
+                        </div>
+                        <div class="">
+                            <div class="left orfont9">{$item['order']['address']}</div>
+                            <div class="right ordertelimg1">
+                                <img src="../addons/zh_vip/template/images/ordertel.png" class="ordertelimg">
+                                <span>{$item['order']['tel']} </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 orderback2">
+                        <p><span class="orbeizhu">备注：</span>{if $item['order']['note']}{$item['order']['note']}{else}无{/if} </p>
+                    </div>
+                    <div class="col-md-12 orderback2">
+                        <p class="orfont3">商品信息</p>
+                        {loop $item['goods'] $item2}
+                        <div class="orderdish">
+                            <div class="left orderdish1">{$item2['name']}</div>
+                            <div class="left">¥{$item2['money']}</div>
+                            <div class="left">×{$item2['num']}</div>
+                            <div class="left">¥{php echo number_format($item2['num']*$item2['money'],2)}</div>
+                        </div>
+                        {/loop}
+                    </div>
+                    <div class="col-md-12 orderback2">
+                        <div class="orderbox1 left">运费</div>
+                        <div class="orderbox2 left">¥{$item['order']['freight']}</div>
+                    </div>
+                    <div class="col-md-12 orderback2">
+                        <p class="orfont3">小计</p>                        
+                        <div class="orderaccount">
+                            <div class="orderbox1 left">优惠金额</div>
+                            <div class="orderbox2 left">¥{php echo number_format($item['order']['preferential'],2)}</div>
+                        </div>
+                        <div class="orderaccount">
+                            <div class="orderbox1 left">支付方式</div>
+                            <div class="orderbox2 left">{if $item['order']['pay_type']==2}余额支付{elseif $item['order']['pay_type']==1}微信支付{elseif $item['order']['pay_type']==3}积分支付{/if}</div>
+                        </div>                      
+                    </div>
+                    <div class="col-md-12 orderback2">
+                        <div class="orderaccount orfont7">
+
+                            <div class="orderbox1 left">实际支付</div>
+                            <div class="orderbox2 left">¥{$item['order']['money']}</div>
+                        </div>                  
+                    </div>
+                    <div class="col-md-12 orderback3">
+                        <div class="right orfont10">
+                        <span class="ordertime">下单时间：{$item['order']['time']}</span>
+                        订单编号：{$item['order']['order_num']}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="myModalb{$item['order']['id']}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document" style="background: #fff">
+              <form action="" method="post" enctype="multipart/form-data" class="">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">订单发货</h4>
+                      </div>
+                      <div class="modal-body form-horizontal form-validate">
+                          <div class="form-group"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">收货人</label>
+                                <div class="col-sm-10">        
+                                    <p>联系人:{$item['order']['user_name']} / {$item['order']['tel']}</p>
+                                    <p>地址: {$item['order']['address']}</p>                                           
+                                </div>
+                            </div>
+                           <div class="form-group">
+                                <label class="col-md-2 control-label">快递公司</label>
+                                <div class="col-md-5">
+                                    <input type="text" name="reply2" class="form-control accout_inpb{$item['order']['id']}" placeholder="尽量填写完整名称,如:韵达快递">
+                                    <p class="erorrb{$item['order']['id']}" style="color:red"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">快递单号</label>
+                                <div class="col-md-5">
+                                    <input type="number" name="reply" class="form-control accout_inp{$item['order']['id']}" placeholder="请输入快递单号">
+                                    <p class="erorr{$item['order']['id']}" style="color:red"></p>
+                                </div>
+                            </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                          <input type="submit" name="submit3" class="btn btn-info submit{$item['order']['id']}" value="确定">
+                          <input type="hidden" name="token" value="{$_W['token']}"/>
+                          <input type="hidden" name="fh_id" value="{$item['order']['id']}"/>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <script type="text/javascript">
+    $(function(){
+        $(".submit{$item['order']['id']}").click(function(){
+             var money=$(".accout_inp{$item['order']['id']}").val();
+            var money2=$(".accout_inpb{$item['order']['id']}").val();
+            if(money2==""){
+                $(".erorrb{$item['order']['id']}").html("请先输入快递公司");
+               return false;
+            }else{
+                $(".erorrb{$item['order']['id']}").html("");
+            }
+                
+            if(money==""){
+                $(".erorr{$item['order']['id']}").html("请先输入快递单号");
+               return false;
+            }else{
+               $(".erorr{$item['order']['id']}").html(""); 
+            }
+        })
+
+    })
+</script>
+{/loop}
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading dlorfont7">今日订单</div>
+            <div class="panel-body" style="padding: 15px;font-size: 16px;">                
+                <p>已完成订单量：<span class="dlorfont7">{$wm2}</span>单</p>
+                <!-- <p>营业额：<span class="dlorfont7">{if $wm['total']}{$wm['total']}{else}0.00{/if}</span>元</p> -->
+                <p>营业额：</p>
+                <p>微信完成<span class="dlorfont7">{$wxwm2}</span>单，收入
+                    <span class="dlorfont7">¥&nbsp;{if $wx['total']}{$wx['total']}{else}0.00{/if}</span>元
+                </p>
+                <p>余额完成<span class="dlorfont7">{$yuewm2}</span>单，收入
+                    <span class="dlorfont7">¥&nbsp;{if $yue['total']}{$yue['total']}{else}0.00{/if}</span>元
+                </p>
+                <p>
+                    积分完成<span class="dlorfont7">{$jfwm2}</span>单，收入
+                    <span class="dlorfont7">¥&nbsp;{if $jf['total']}{$jf['total']}{else}0.00{/if}</span>元
+                </p>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading dlorfont7">昨日订单</div>
+            <div class="panel-body" style="padding: 15px;font-size: 16px;">                
+                <p>已完成订单量：<span class="dlorfont7">{$ztwm2}</span>单</p>
+                <!-- <p>营业额：<span class="dlorfont7">{if $ztwm['total']}{$ztwm['total']}{else}0.00{/if}</span>元</p> -->
+                <p>营业额：</p>
+                <p>微信完成<span class="dlorfont7">{$ztwxwm2}</span>单，收入
+                    <span class="dlorfont7">¥&nbsp;{if $ztwx['total']}{$ztwx['total']}{else}0.00{/if}</span>元
+                </p>
+                <p>余额完成<span class="dlorfont7">{$ztyuewm2}</span>单，收入
+                    <span class="dlorfont7">¥&nbsp;{if $ztyue['total']}{$ztyue['total']}{else}0.00{/if}</span>元
+                </p>
+                <p>积分完成<span class="dlorfont7">{$ztjfwm2}</span>单，收入
+                    <span class="dlorfont7">¥&nbsp;{if $ztjf['total']}{$ztjf['total']}{else}0.00{/if}</span>元
+                </p>
+            </div>
+        </div>        
+    </div>
+
+
+
+
+
+</div>
+</div>
+<div class="text-right we7-margin-top">{$pager}</div>
+
+
+<!-- <audio id="myaudio" src="../addons/zh_vip/template/images/yy.mp3" controls="controls" loop="false" hidden="true" > -->
+<script type="text/javascript">
+    $(function(){
+        // $("#frame-1").addClass("in");
+        $("#frame-3").show();
+        $("#yframe-3").addClass("wyactive");
+
+
+
+    })
+</script>{template 'common/footer'}

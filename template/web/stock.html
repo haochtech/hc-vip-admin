@@ -1,0 +1,255 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<style>
+ .panel-default>.wyheader{font-weight: bold;background-color: #F3F3F3;}
+  .yg14{margin-top: 30px;}
+  .chongzhi{margin-bottom: 10px;height: 35px;}
+  .ygminp,.man2,.man,.man3,.money,.money2,.titleinp{
+    float: left;
+    border:1px solid #eee;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: white;
+  }
+  .man{
+    padding: 0px 12px;
+    text-align: center;
+  }
+  .man3{
+    padding: 0px 12px;
+    text-align: center;
+  }
+  .man2{
+    width: 130px;
+    padding: 0px 12px;
+    text-align: center;
+  }
+  .man4{
+    float: left;
+    height: 34px;
+    border-radius: 0px;
+    line-height: 20px;
+  }
+  .money{
+    width: 60%;
+    text-indent: 1em;
+  }
+  .money2{
+    width: 70%;
+    text-indent: 1em;
+  }
+  .ygminp{
+    padding: 0 15px;
+  }
+  .titleinp2>.row{
+    width: 260px;
+    margin: 0px;
+  }
+  .titleinp2>.row>.col-sm-8{
+    width: 100%;
+    padding-left: 0px;
+  }
+  .shanchu{
+    color: white;
+    background-color: #ED5565;
+    cursor: pointer;
+  }
+  .tianjia{
+    border:1px solid #eee;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    width: 110px;
+    cursor: pointer;
+  }
+  .fa-plus{margin-right: 5px;}
+  .beizhu{margin-top: 10px;}
+  .tianj1{
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    border:1px solid #EFEFEF;
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  .ygtime{padding: 0px;}
+  @media (min-width: 1592px){
+    .titleinp{
+        width: 15%;
+        text-indent: 1em;
+        float: left;
+        border:1px solid #eee;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 0px;
+        margin-right: 20px;
+      }
+      .titleinp3{
+        width: 15%;
+        text-indent: 1em;
+        float: left;
+        border:1px solid #eee;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 0px;
+      }
+      .titleinp2{
+        float: left;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 0px;
+        margin-right: 20px;
+      }
+  }
+  @media (max-width: 1591px){
+    .titleinp{
+        width: 10%;
+        padding-left: 5px;
+        float: left;
+        border:1px solid #eee;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 0px;
+        margin-right: 10px;
+      }
+      .titleinp3{
+        width: 10%;
+        padding-left: 5px;
+        float: left;
+        border:1px solid #eee;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 0px;
+      }
+      .titleinp2{
+        float: left;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 0px;
+        margin-right: 10px;
+      }
+  }
+  .shcg,.czcg{
+    position: absolute;
+    top: 6%;
+    left: 0px;
+    display: none;
+  }
+  .formbox1{border:1px solid #eee;padding-top: 20px;padding-bottom: 20px;background-color: #f2f2f2;}
+  .sizecon{
+    display: none;
+  }
+  .sizetop{
+    color: #666;
+    line-height: 20px;
+  }
+  .sizetop .size{
+    height: 20px;
+    line-height: 20px;
+  }
+  .sizetop .size input{
+    margin-right:5px; 
+    float: left;
+  }
+  .sizetop p{
+    color: #999;
+  }
+  .explain{
+    display: none;
+    border-radius: 5px;
+    color: #00c1de;
+    background-color: #dff6fa;
+    border:1px solid #c1e7ee;
+    padding-top: 10px;
+    margin-bottom: 15px;
+  }
+  .yginter,.table2{padding: 0px;}
+</style>
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>
+    <li><a href="{php echo $this->createWebUrl('addgoods')}">添加/编辑商品</a></li>
+    <li class="active"><a href="javascript:void(0);">添加库存</a></li>
+</ul>
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">库存</div>
+        <div class="panel-body" style="padding: 20px 15px;">
+            <div class="form-group sizetop"> 
+                <label for="check" class="size"><input type="checkbox" name="checkbox" id="check">启用商品规格</label>
+                <p>启用商品规格后，商品的价格及库存以商品规格为准,库存设置为0则会到”已售罄“中，手机也不会显示, -1为不限制</p>    
+            </div>
+            <div class="col-md-12 explain">
+                <p>1. 拖动规格可调整规格显示顺序, 更改规格及规格项后请点击下方的【刷新规格项目表】来更新数据。</p>
+                <p>2. 每一种规格代表不同型号，例如颜色为一种规格，尺寸为一种规格，如果设置多规格，手机用户必须每一种规格都选择一个规格项，才能添加购物车或购买。</p>
+            </div>
+
+            <div class="sizecon">
+                  <div class="col-md-12 guigebox">
+                  <!-- <div class="form-group col-md-12 formbox1">
+                    <div class="col-md-12 chongzhi">                         
+                       <input type="number" value="" class="money2 inp1"/>
+                       <div class="btn btn-info man4 smallsize"><span class="fa fa-plus"></span>添加规格项</div>
+                       <div  class="man shanchu"><span class="fa fa-times"></span></div>
+                    </div>
+                    <table class="table2 col-md-12">
+                        <div class="col-md-12 yginter2">
+                            <div class="col-md-4 chongzhi">
+                               <div class="ygminp">规格</div>
+                               <input type="number" value="" class="ygminp inp1"/>
+                               <div class="man shanchu"><span class="fa fa-times"></span></div>
+                            </div>
+                        </div>
+                    </table> 
+                </div> -->
+                </div>
+                 <div class="col-md-12">
+                    <div class="tianj1 col-md-6 col-md-push-3"><span class="fa fa-plus"></span>添加一个规格</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- {template 'common/footer'} -->
+<script type="text/javascript">
+
+    var num = $(".yginter2").length;
+    $(function(){
+        $("#frame-3").addClass("in");
+        $("#frame-3").show();   
+
+        //添加小框
+        $(".smallsize").click(function(){
+            num ++;
+            var addli = $('<div class="col-md-4 chongzhi"><div class="ygminp">规格</div><input type="number" name="day" class="ygminp inp1"/><div  class="man shanchu"><span class="fa fa-times"></span></div></div>');
+            addli.appendTo($("#addhang2"));
+        });
+
+        var number=$(".formbox1").length;
+        $(".tianj1 ").click(function(){
+            number ++;
+            var addli = $('<div class="col-md-12 chongzhi"><input type="number" value="" class="money2 inp1"/><div class="btn btn-info man4 smallsize"><span class="fa fa-plus"></span>添加规格项</div><div  class="man shanchu"><span class="fa fa-times"></span></div></div>')
+            //var addli = $('<div class="form-group col-md-12 formbox1"><table class="table2 col-md-12"><div class="col-md-12 yginter2"><div class="col-md-4 chongzhi"><div class="ygminp">规格</div><input type="number" value="" class="ygminp inp1"/><div class="man shanchu"><span class="fa fa-times"></span></div></div></div></table></div>');
+            addli.appendTo($(".guigebox"));
+        });
+        //点击启用实现下拉
+        $(".size").click(function(){
+            var status=$(this).children("input").is(':checked');
+            // console.log(status)
+            if(status==true){
+                $(".sizecon").show();
+                $(this).children("input").attr('checked',"false");
+                $(".explain").show();
+            }else{
+                $(".sizecon").hide();
+                $(this).children("input").attr('checked',"true");
+                $(".explain").hide()
+            }
+        })
+    })
+</script>
+{template 'common/footer'}

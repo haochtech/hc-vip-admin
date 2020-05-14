@@ -1,0 +1,129 @@
+{template 'public/header'}
+
+{template 'public/comhead'}
+
+<style type="text/css">
+
+    .nav-tabs>li>a:hover{
+
+        color: #333;
+
+        border-color: #31C2A5;
+
+        background-color: white;
+
+    }
+
+    .nav-tabs > li.active > a,.nav-tabs > li.active > a:hover{
+
+        background-color: #31C2A5;
+
+        color: white;
+
+        border-color: #31C2A5;
+
+    }
+
+    .nav.nav-tabs{border-color: #31C2A5;margin-top: 30px;}
+
+</style>
+
+<div class="main">
+
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+
+        <!--<input type="hidden" name="parentid" value="{$parent['id']}" />-->
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+
+                商户提现设置
+
+            </div>
+
+            <div class="panel-body">
+
+                
+
+                <div class="form-group">
+
+                  <label class="col-xs-12 col-sm-3 col-md-2 control-label">最低提现金额</label>
+
+                    <div class="col-sm-9">
+
+                        <p class="input-group">
+
+                             <input type="text" name="tx_money" value="{$item['tx_money']}" id="points" class="form-control" />
+
+                             <span class="input-group-addon">元</span>
+
+                        </p>
+
+                        <div class="help-block">最低提现金额不能小于1元，建议填写整数，不填写为不限制</div>
+
+                 </div>
+
+                </div>
+
+                <div class="form-group">
+
+                  <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现费率</label>
+
+                  <div class="col-sm-9">
+
+                        <p class="input-group">
+
+                             <input type="number" name="tx_sxf" value="{$item['tx_sxf']}" id="points" class="form-control" />
+
+                             <span class="input-group-addon">%</span>
+
+                        </p>
+
+                        <div class="help-block">用户申请提现时，每笔申请提现扣除的费用，默认为空，即提现不扣费</div>
+
+                  </div>
+
+                </div>
+
+                
+
+                <div class="form-group">
+
+                  <label class="col-xs-12 col-sm-3 col-md-2 control-label">提现须知</label>
+
+                  <div class="col-sm-9">
+
+                       {php echo tpl_ueditor('tx_details',$item['tx_details']);}
+
+                  </div>
+
+                </div>
+
+      
+
+
+
+             </div>
+
+        </div>
+
+        <div class="form-group col-sm-12">
+
+            <input type="submit" name="submit" value="提交" class="btn col-sm-3" style="color: white;background-color: #31C2A5;"/>
+
+            <input type="hidden" name="token" value="{$_W['token']}" />
+
+             <input type="hidden" name="id" value="{$item['id']}" />
+
+        </div>
+
+    </form>
+
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-9").show();
+        $("#yframe-9").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

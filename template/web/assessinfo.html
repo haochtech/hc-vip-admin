@@ -1,0 +1,220 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcss.css">
+<style type="text/css">
+    input[type="radio"] + label::before {
+        content: "\a0"; /*不换行空格*/
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 16px;
+        width: 1em;
+        height: 1em;
+        margin-right: .4em;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+        text-indent: .15em;
+        line-height: 1; 
+    }
+    input[type="radio"]:checked + label::before {
+        background-color: #44ABF7;
+        background-clip: content-box;
+        padding: .1em;
+        border: 2px solid #44ABF7;
+    }
+    input[type="radio"] {
+        position: absolute;
+        clip: rect(0, 0, 0, 0);
+    }
+</style>
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>
+    <li ><a href="{php echo $this->createWebUrl('assess');}">评论列表</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('assessinfo');}">添加/编辑评论</a></li>
+</ul>
+<div class="main">
+ <div class="panel panel-default ygdefault">
+
+        <div class="panel-heading wyheader">评论管理&nbsp;>&nbsp;评论详情</div>
+
+        <div class="panel-body">
+
+<form class="form-horizontal" action="" method="POST">
+ 
+
+
+  <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="margin-right: 15px;">选择商品</label>
+                    <select class="col-sm-4" id="username" name="good_id">
+                     <option value="0">请选择商品</option>
+                        {loop $good $key $item}
+                        {if $item['id']==$list['good_id']}
+                        <option value="{$item['id']}" selected="selected" name="unopction">{$item['name']}</option>
+                        {else}
+                        <option value="{$item['id']}" name="unopction">{$item['name']}</option>
+                        {/if}
+                        {/loop}
+                    </select>
+                    <span class="btn btn-sm storeblue" data-toggle="modal" data-target="#myModal1" style="margin-left: 30px;">搜索商品</span>
+                    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel" style="font-size: 20px;">提示</h4>
+                                </div>
+                                <div class="modal-body ygsearch" style="font-size: 20px;padding: 15px 30px;">
+                                    <input type="text" id="ygsinput" placeholder="请输入商品名称">
+                                    <span class="btn btn-sm ygbtn storeblue">搜索</span>
+                                    <div class="searchname" style="margin-top: 8px;"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+              </div>
+              <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">商品规格</label>
+    <div class="col-sm-10">
+      <input type="text"   name="spec" value="{$list['spec']}" class="form-control" id="inputEmail3" >
+    </div>
+  </div>
+               <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">评论时间</label>
+            <div class="col-sm-10">
+             {php echo tpl_form_field_date(cerated_time, $list['cerated_time'],$withtime = true);}
+            </div>
+          </div>
+
+
+   <div class="form-group">
+    <label class="col-md-2 control-label">用户头像</label>
+    <div class="col-sm-9">
+        {php echo tpl_form_field_image('user_img', $list['user_img'])}
+        <span class="ygmargin">* 建议尺寸大小:80*80px</span>
+    </div>
+</div>  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">用户昵称</label>
+    <div class="col-sm-10">
+      <input type="text"  name="user_name" value="{$list['user_name']}" class="form-control" id="inputEmail3">
+    </div>
+  </div>
+           <div class="form-group">
+                    <label for="lastname" class="col-sm-2 control-label">评价等级</label>
+                    <div class="col-sm-10">
+                         <label class="radio-inline">
+                            <input type="radio" id="emailwy1" name="score" value="1" {if $list['score']==1 || empty($list['score'])}checked{/if} />
+                            <label for="emailwy1">好评</label>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="emailwy2" name="score" value="2" {if $list['score']==2}checked{/if} />
+                            <label for="emailwy2">中评</label>
+                        </label>
+                         <label class="radio-inline">
+                            <input type="radio" id="emailwy3" name="score" value="3" {if $list['score']==2}checked{/if} />
+                            <label for="emailwy3">差评</label>
+                        </label>
+                    </div>
+                </div>
+
+
+    <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">评论内容</label>
+    <div class="col-sm-10">
+      <input type="text"   name="content" value="{$list['content']}" class="form-control" id="inputEmail3" >
+    </div>
+  </div>
+<div class="form-group">
+    <label class="col-xs-12 col-sm-3 col-md-2 control-label">评价图片</label>
+    <div class="col-sm-9">
+       {php echo tpl_form_field_multi_image('img',$img);}
+       <span class="ygmargin">* 建议尺寸大小:750*750px</span>
+    </div>
+</div>
+
+
+
+
+ 
+
+
+
+  {if $list['status']==2}
+
+   <div class="form-group">
+
+    <label for="inputEmail3" class="col-sm-2 control-label">回复内容</label>
+
+    <div class="col-sm-10">
+
+      <input type="text"  name="reply" value="{$list['reply']}" class="form-control" id="inputEmail3">
+
+    </div>
+
+  </div>
+{/if}
+   
+  <div class="form-group">
+            <input type="submit" name="submit" value="提交" class="btn col-lg-3" style="color: white;background-color: #44ABF7;"/>
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            <input type="hidden" name="id" value="{$info['id']}" />
+        </div>
+
+  <input type="hidden" name="id" value="{$list['id']}"/>
+
+    <input type="hidden" name="token" value="{$_W['token']}"/>
+
+</form>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        // $("#frame-8").addClass("in");
+        $("#frame-3").show();
+        $("#yframe-3").addClass("wyactive");
+
+
+
+        $(".searchname").hide();
+        $(".ygbtn").on("click",function(){
+            var ygsinput = $("#ygsinput").val();
+            console.log(ygsinput)
+            if(ygsinput.length==''){
+              $(".searchname").html('');
+            }else{
+              $(".searchname").html('')  
+              var keywords = $("#ygsinput").val()
+              $.ajax({
+                  type:"post",
+                  url:"{$_W['siteroot']}/app/index.php?i={$_W['uniacid']}&c=entry&do=FindGood&m=zh_vip",
+                  dataType:"text",
+                  data:{keywords:keywords},
+                  success:function(data){                    
+                      var data = eval('(' + data + ')')
+                      console.log(data);
+                      $(".searchname").show();
+                      for(var i=0;i<data.length;i++){
+                        $(".searchname").append('<div class="shnbox" data-dismiss="modal" id="'+data[i].id+'"><a href="javascript:void(0);"><p>'+data[i].name+'</p></a></div>')
+                      }
+                      $(".shnbox").each(function(){
+                        $(this).click(function(){
+                            // console.log($(this).attr("id"));
+                            // $("#username").val($(this).html())
+                            var thid = $(this).attr("id");
+                            $('#username option[value='+thid+']').attr("selected", true);
+                        })
+                        
+                      })
+                      
+                  }
+              }) 
+            }
+            
+        })
+    })
+</script>{template 'common/footer'}

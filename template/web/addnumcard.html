@@ -1,0 +1,167 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcss.css">
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/component-chosen.css">
+<script type="text/javascript" src="../addons/zh_vip/template/public/chosen.jquery.js"></script>
+
+<style type="text/css">
+    .ygnum2>input,.ygnum1>input{
+        width: 100px;
+        height: 34px;
+        border:1px solid #e7e7e7;
+    }
+    .ygyuan{
+        display: inline-block;
+        border-top:1px solid #e7e7e7;
+        border-right:1px solid #e7e7e7;
+        border-bottom:1px solid #e7e7e7;
+        color: #98999a;
+        height: 34px;
+        width: 40px;
+        text-align: center;
+        line-height: 34px;
+        margin-top: 1px;
+        background-color: #eee;
+    }
+    #multiple_chosen{
+        width: 961px!important;
+    }
+</style>
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li><a href="{php echo $this->createWebUrl('numcard')}">次卡管理</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('addnumcard')}">添加/编辑次卡</a></li>
+</ul>
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+        <div class="panel panel-default ygdefault">
+            <div class="panel-heading wyheader">
+                添加/编辑次卡
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">次卡名称</label>
+                    <div class="col-sm-10">
+                        <input type="text"  name="name" value="{$list['name']}" class="form-control" id="inputEmail3" placeholder="请填写次卡名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">次卡次数</label>
+                    <div class="col-sm-10">
+                        <input type="number"  name="number" value="{$list['number']}" class="form-control" id="inputEmail3" placeholder="请填写次卡次数">
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">金额</label>
+                    <div class="col-sm-10">
+                        <input type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" name="money" value="{$list['money']}" class="form-control" id="inputEmail3" placeholder="请填写金额">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">次卡LOGO</label>
+                    <div class="col-sm-9">
+                        {php echo tpl_form_field_image('img', $list['img'])}
+                        *建议尺寸比例180:100
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="padding-right: 15px;">到期时间</label>
+                    <div class="col-sm-5">
+                       {php echo tpl_form_field_date(time,$list['time']);}
+                    </div>
+                </div> 
+     <!--            <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="margin-right: 15px;">选择门店{$list['store_id']}</label>                       
+                    <select id="multiple" class="form-control-chosen col-sm-8" name="store_id[]" multiple>
+
+                        {loop $store $key $item}
+                        {loop $store_id  $item2}
+                        {if $item['id']==$item2}
+                        <option value="{$item['id']}" selected="selected">{$item['name']}</option>
+                        {else}
+                        <option value="{$item['id']}" >{$item['name']}</option>
+                        {/if}
+                        {/loop}
+                        {/loop}
+                    </select>
+                </div> -->
+
+
+
+
+                  <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label" style="margin-right: 15px;">选择门店</label>
+                    <select class="col-sm-8" name="store_id">
+                        <option value="0" selected="selected">平台发布</option>
+                        {loop $store $key $item}
+                        {if $item['id']==$list['store_id']}
+                        <option value="{$item['id']}" selected="selected">{$item['name']}</option>
+                        {else}
+                        <option value="{$item['id']}" >{$item['name']}</option>
+                        {/if}
+                        {/loop}
+                    </select>
+                </div>
+      <!--           <div  class="form-group">
+                    <label for="" class="col-sm-2"></label>
+                    <span class="help-block col-sm-8">*可以多选,不选则适用所有门店</span>
+                </div> -->
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">排序</label>
+                    <div class="col-sm-10">
+                        <input type="number"  name="num" value="{$list['num']}" class="form-control" id="inputEmail3" placeholder="请填写排序">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">购买须知</label>
+                    <div class="col-sm-9">
+                         {php echo tpl_ueditor('details',$list['details']);}
+                    </div>
+                </div>
+               
+              <!--   <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">使用说明</label>
+                    <div class="col-sm-10">
+                        <input type="text"  name="details" value="{$list['details']}" class="form-control" id="inputEmail3" placeholder="请填写使用说明">
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" name="submit" value="提交" class="btn col-lg-3" style="color: white;background-color: #44ABF7;"/>
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            <input type="hidden" name="id" value="{$list['id']}" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#frame-10").show();
+        $("#yframe-10").addClass("wyactive");
+
+        $('.form-control-chosen').chosen({
+          allow_single_deselect: true,
+          class: 'col-sm-8;'
+        });
+
+        $(function() {
+          $('[title="clickable_optgroup"]').addClass('chosen-container-optgroup-clickable');
+        });
+        $(document).on('click', '[title="clickable_optgroup"] .group-result', function() {
+          var unselected = $(this).nextUntil('.group-result').not('.result-selected');
+          if(unselected.length) {
+            unselected.trigger('mouseup');
+          } else {
+            $(this).nextUntil('.group-result').each(function() {
+              $('a.search-choice-close[data-option-array-index="' + $(this).data('option-array-index') + '"]').trigger('click');
+            });
+          }
+        });
+
+    })
+    
+</script>{template 'common/footer'}

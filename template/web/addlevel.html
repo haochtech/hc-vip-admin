@@ -1,0 +1,92 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcss.css">
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li><a href="{php echo $this->createWebUrl('level')}">等级管理</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('addlevel')}">添加等级</a></li>
+</ul>
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+        <!--<input type="hidden" name="parentid" value="{$parent['id']}" />-->
+        <div class="panel panel-default ygdefault">
+            <div class="panel-heading wyheader">
+                内容编辑
+            </div>
+            <div class="panel-body">
+                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">等级名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="name" class="form-control" value="{$info['name']}" />
+                  <!--       {php echo tpl_form_field_industry('aihao')} -->
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">等级级别</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="level" class="form-control" value="{$info['level']}" />
+                        <span class="help-block">*级别从小到大(1为最低级)</span>
+                    </div>
+                </div>               
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">背景图片</label>
+                    <div class="col-sm-9">
+                        {php echo tpl_form_field_image('img', $info['img'])}
+                        <span class="help-block">*建议宽高2:1</span>
+                    </div>
+                </div>
+               <!--  <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">会员中心背景图片</label>
+                    <div class="col-sm-9">
+                        {php echo tpl_form_field_image('my_img', $info['my_img'])}
+                        <span class="help-block">*建议宽高2:1</span>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                  <label class="col-xs-12 col-sm-3 col-md-2 control-label">折扣</label>
+                  <div class="col-sm-9">
+                        <p class="input-group" style="margin-bottom: 0px;">
+                             <input type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" name="discount" value="{$info['discount']}" id="points" class="form-control" />
+                             <span class="input-group-addon">%</span>                             
+                        </p>
+                        <div class="help-block" style="color: red">*80%即原价的8折,100%则不享受折扣</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-xs-12 col-sm-3 col-md-2 control-label">累计消费</label>
+                  <div class="col-sm-9">
+                        <p class="input-group" style="margin-bottom: 0px;">
+                             <input type="text" onkeyup="value=value.replace(/[^\d.]/g,'')" name="threshold" value="{$info['threshold']}" id="points" class="form-control" />
+                             <span class="input-group-addon">元</span>                             
+                        </p>
+                        <div class="help-block" style="color: red">*从上一等级累计消费金额可以升级到当前等级</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">会员权益</label>
+                    <div class="col-sm-9">
+                       {php echo tpl_ueditor('details',$info['details']);}
+                    </div>
+                </div> 
+           
+               
+             
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" value="提交" class="btn col-lg-3" style="color: white;background-color: #44ABF7;"/>
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            <input type="hidden" name="id" value="{$info['id']}" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-1").show();
+        $("#yframe-1").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

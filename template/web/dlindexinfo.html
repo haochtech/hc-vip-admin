@@ -1,0 +1,225 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<style type="text/css">
+    .yg9_content{padding:0px;}
+    .yg9_content>li>.col-md-12{
+        height: 130px;
+        box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+        border-radius: 6px;
+        overflow: hidden;
+    }    
+    .yg9_content>li:nth-child(1)>.col-md-12{
+        background-color: #32CC7F;
+        color: white;
+        /*background:url(../addons/zh_vip/template/images/tuceng4.png) no-repeat center;
+        background-size: 100%;*/
+    }
+    .yg9_content>li:nth-child(2)>.col-md-12{
+        background-color: #f17c67;
+        color: white;
+    }
+    .yg9_content>li:nth-child(3)>.col-md-12{
+        background-color: #99CC33;
+        color: white;
+    }
+    .yg9_content>li:nth-child(4)>.col-md-12{
+        background-color: #6C6FBF;
+        color: #fff;
+    }
+    .tmoney{font-size: 26px;margin-top: 30px;text-align: center;}
+    .today{font-size: 14px;text-align: center;}
+    .vipbanner{padding:0px;}
+    .vipbox{
+        background-color: white;
+        box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .vipbig1{padding-left: 0px;} 
+    .vipbig2{padding-right: 0px;}
+    .vipcontent{
+        border-bottom: 1px solid #E4EAEC;
+        height: 60px;
+        line-height: 60px;
+        padding:0px;
+    }  
+    .vipright{float: right;}
+    .vipleft{float: left;}
+    .vipadd{
+        height: 210px;
+        text-align: center;
+    }
+    .vipadd>li{
+        padding-top: 50px;
+    }
+    .font1{font-size: 30px;color: #333;}
+    .font2{font-size: 15px;color: #666;margin-top: 15px;}
+    .vipsell{padding:0px;}
+    .vipsell>li:nth-child(1){padding-left: 0px;}
+    .vipsell>li:nth-child(2){padding-right: 0px;}
+    .vipsell{
+        height: 210px;
+        padding: 25px 0px;
+    }
+    .vipsell>li{height: 100%;}
+    .vipsell>li>div{
+        background-color: #F7F7F7;
+        height: 100%;
+        border-radius: 6px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .xuni{color: #666;text-align: center;}
+    .xuni>span{color: #ff6363;}
+    .viptitle{
+        color: #333;
+        border-bottom:1px solid #DEDEDE;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+        width: 50%;
+        font-size: 16px;
+    }
+    .botul{
+        display: flex;
+    }
+    .botul>li{
+        width: 13%;
+        margin-right: 1.5%;
+        height: 220px;
+        background-color: white;
+        padding: 50px 0px;
+    }
+    .botul>li:last-child{
+        margin-right:0px;
+        box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+    }
+    .boxcon{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+    .boxcon>img{
+        margin-bottom: 10px;
+    }
+    .bfont1{
+        color: #666;
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+    .bfont2{
+        color: #ED5D5D;
+        font-size: 20px;
+    }
+    .backimg{
+        width: 71px;
+        height: 74px;
+        margin-top: 30px;
+    }
+    .footer{
+    background:none !important;
+    color:#666;
+    /*position: fixed;*/
+/*    bottom: 0;*/
+    /*z-index: -100;*/
+    opacity: 1;
+    width: 100%;
+}
+</style>
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">数据概况信息</div>
+            <div class="panel-body">        
+            <ul class="col-md-12 yg9_content" style="margin-bottom: 10px;">
+                <li class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <img class="backimg" src="../addons/zh_vip/template/images/xinxi1.png">
+                        </div>
+                        <div class="col-md-6">
+                            <p class="tmoney">¥&nbsp;{if $order['total']}{$order['total']}{else}0.00{/if}</p>
+                            <p class="today">今日销售总额</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <img class="backimg" src="../addons/zh_vip/template/images/xinxi2.png">
+                        </div>
+                        <div class="col-md-6">
+                            <p class="tmoney">¥&nbsp;{if $jrss}{$jrss}{else}0.00{/if}</p>
+                            <p class="today">今日收入现金</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-md-3">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <img class="backimg" src="../addons/zh_vip/template/images/xinxi3.png">
+                        </div>
+                        <div class="col-md-6">
+                            <p class="tmoney">¥&nbsp;{if $jrcz}{$jrcz}{else}0.00{/if}</p>
+                            <p class="today">今日充值金额</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="col-md-3">
+                    <div class="col-md-12">
+                    <div class="col-md-6">
+                            <img class="backimg" src="../addons/zh_vip/template/images/xinxi4.png">
+                        </div>
+                        <div class="col-md-6">
+                            <p class="tmoney">{$jr}</p>
+                            <p class="today">今日新增会员</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>        
+    </div>
+ </div>
+ <div class="main" style="height: 270px;">
+    <div class="col-md-12 vipbanner">
+        <div class="col-md-6 vipbig1">
+            <div class="col-md-12 vipbox">
+                <div class="col-md-12 vipcontent">
+                    <div class="vipleft">
+                        <img src="../addons/zh_vip/template/images/ygrz.png">
+                        <span>会员信息</span>
+                    </div>
+                    <div class="vipright">(单位：人)</div>
+                </div>
+                <ul class="col-md-12 vipadd">
+                    <li class="col-md-3">
+                        <p class="font1">{$jr}</p>
+                        <p class="font2">今日新增</p>
+                    </li>
+                    <li class="col-md-3">
+                        <p class="font1">{$zuor}</p>
+                        <p class="font2">昨日新增</p>
+                    </li>
+                    <li class="col-md-3">
+                        <p class="font1">{$beny}</p>
+                        <p class="font2">本月新增</p>
+                    </li>
+                    <li class="col-md-3">
+                        <p class="font1">{$totalhy['count']}</p>
+                        <p class="font2">会员总数</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+      $("#frame-0").show();
+        $("#yframe-0").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

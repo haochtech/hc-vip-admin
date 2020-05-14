@@ -1,0 +1,125 @@
+{template 'public/header'}
+
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li class="active"><a href="{php echo $this->createWebUrl('userorder',array('user_id'=>$_GPC['user_id']));}">买单订单</a></li>
+    <li><a href="{php echo $this->createWebUrl('userczorder',array('user_id'=>$_GPC['user_id']));}">充值订单</a></li>
+     <li><a href="{php echo $this->createWebUrl('userscorder',array('user_id'=>$_GPC['user_id']));}">商城订单</a></li>
+</ul>
+<div class="row" style="margin-top: 15px;">
+    <div class="col-lg-12">
+        <form action="" method="GET" class="col-md-4">
+        <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="zh_vip" />
+            <input type="hidden" name="do" value="userorder" />
+            <div class="input-group" style="width: 300px">
+                <input type="text" name="keywords" class="form-control" placeholder="请输入姓名/门店名称/订单号/卡号/实体卡列表名称">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit" value="查找"/>
+                </span>
+            </div>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+                <input type="hidden" name="user_id" value="{$_GPC['user_id']}"/>
+        </form>
+        <form action="" method="GET" class="col-md-4">
+        <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="zh_vip" />
+            <input type="hidden" name="do" value="userorder" />
+            <div class="input-group" style="width: 100px">
+                {php echo tpl_form_field_daterange('time');}
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit2" value="查找"/>
+                </span>
+            </div><!-- /input-group -->
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+            <input type="hidden" name="user_id" value="{$_GPC['user_id']}"/>
+        </form>
+        <form action="" method="POST" class="col-md-4">
+            <div class="input-group" style="width: 100px">
+                {php echo tpl_form_field_daterange('dc_time');}
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit4" value="导出"/>
+                </span>
+            </div><!-- /input-group -->
+            <input type="hidden" name="store_id" value="{$storeid}"/>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+        </form>
+    </div><!-- /.col-lg-6 -->
+</div>  
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            订单管理
+        </div>
+        <div class="panel-body" style="padding: 0px 15px;">
+            <div class="row">
+
+                <table class="yg5_tabel col-md-12">
+
+                    <tr class="yg5_tr1">
+
+                        <td class="col-md-1">订单号</td>
+                        <td class="store_td1 col-md-1">所属门店</td>
+                        <td class="col-md-1">付款时间</td>
+                        <td class="col-md-1">付款人</td>
+                        <td class="col-md-1">会员卡号</td>
+                        <td class="col-md-1">实体卡列表名称</td>
+                        <td class="col-md-1">金额</td>
+                        <td class="col-md-1">付款类型</td>
+                    </tr>
+
+                     {loop $list $key $item}
+                    <tr class="yg5_tr2">
+                    <td> {$item['order_num']}</td>
+                    <td> {$item['store_name']}</td>
+                    <td> {$item['time']}</td>
+                    <td> {$item['user_name']}</td>
+                    <td> {$item['vip_code']}</td>
+                    <td>{if $item['st_name']}{$item['st_name']}{else}无{/if}</td>
+                    <td> {$item['money']}</td>
+                    <td> {if $item['pay_type']==2}<span class="label storeblue"> 余额支付</span>{elseif $item['pay_type']==1}<span class="label label-success"> 微信支付</span>{elseif $item['pay_type']==3}<span class="label label-info">积分支付</span>{elseif $item['pay_type']==0}<span class="label label-warning">{$item['pay_type2']}</span>{/if}</td>
+                    </tr>
+                    {/loop}
+
+                      {if empty($list)}
+
+                <tr class="yg5_tr2">
+
+                <td colspan="9">
+
+                  暂无订单信息
+
+                </td>
+
+              </tr>
+
+              {/if}
+
+
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="text-right we7-margin-top">
+
+             {$pager}
+
+             </div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-1").show();
+        $("#yframe-1").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

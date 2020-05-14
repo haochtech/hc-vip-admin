@@ -1,0 +1,85 @@
+{template 'public/header'}
+
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li class="active"><a href="">余额明细</a></li>
+</ul>
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-lg-12">
+        <form action="" method="GET" class="col-md-4">
+        <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="zh_vip" />
+            <input type="hidden" name="do" value="balance" />
+            <div class="input-group" style="width: 300px">
+                <input type="text" name="keywords" class="form-control" placeholder="请输入交易项目">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit" value="查找"/>
+                </span>
+            </div>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+                <input type="hidden" name="user_id" value="{$_GPC['user_id']}"/>
+        </form>
+        <form action="" method="GET" class="col-md-4">
+        <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="zh_vip" />
+            <input type="hidden" name="do" value="balance" />
+            <div class="input-group" style="width: 100px">
+                {php echo tpl_form_field_daterange('time');}
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit2" value="查找"/>
+                </span>
+            </div><!-- /input-group -->
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+            <input type="hidden" name="user_id" value="{$_GPC['user_id']}"/>
+        </form>
+    </div><!-- /.col-lg-6 -->
+</div>  
+<div class="main">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+           {$userInfo['nickname']}的余额明细
+        </div>
+        <div class="panel-body" style="padding: 0px 15px;">
+            <div class="row">
+                <table class="yg5_tabel col-md-12">
+                    <tr class="yg5_tr1">
+                        <td class="col-md-1">交易时间</td>
+                        <td class="store_td1 col-md-1">交易金额</td>
+                        <td class="col-md-1">交易项目</td>
+                    </tr>
+                     {loop $list $key $item}
+                    <tr class="yg5_tr2">
+                    <td> {$item['time']}</td>
+                        <td> {if $item['type']==1}<span style=" font-size: 16px">+{$item['money']}</span>{else}<span style=" font-size: 16px">-{$item['money']}</span>{/if}</td>
+                    <td> {$item['note']}</td>
+                    </tr>
+                    {/loop}
+                      {if empty($list)}
+                <tr class="yg5_tr2">
+                <td colspan="9">
+                  暂无余额明细
+                </td>
+              </tr>
+              {/if}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-right we7-margin-top">
+
+             {$pager}
+
+             </div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-1").show();
+        $("#yframe-1").addClass("wyactive");
+    })
+</script>{template 'common/footer'}

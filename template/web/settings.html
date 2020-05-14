@@ -1,0 +1,227 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcss.css">
+<ul class="nav nav-tabs">
+	<span class="ygxian"></span>
+	<div class="ygdangq">当前位置:</div>    
+	<li class="active"><a href="javascript:void(0);">系统信息</a></li>
+</ul>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<!--<input type="hidden" name="parentid" value="{$parent['id']}" />-->
+		<div class="panel panel-default ygdefault">
+			<div class="panel-heading wyheader">
+				系统信息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台logo</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_image('link_logo', $item['link_logo'])}
+						<span class="help-block">*建议比例 1:1</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台名称</label>
+					<div class="col-sm-9">
+						<input type="text" name="link_name" class="form-control" value="{$item['link_name']}" />
+					</div>
+				</div>  
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台电话</label>
+					<div class="col-sm-9">
+						<input type="text" name="link_tel"  class="form-control" value="{$item['link_tel']}" />
+					</div>
+				</div>       
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台风格颜色</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_color('link_color', $item['link_color'])} 
+						<span class="help-block">*不填写会默认选中橘色</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台模式</label>
+					<div class="col-sm-9">
+						<label class="radio-inline">
+							<input type="radio" id="emailwy1" name="model" value="1" {if $item['model']==1}checked{/if} />
+							<label for="emailwy1">单店</label>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" id="emailwy2" name="model" value="2" {if $item['model']==2 || empty($item['model'])}checked{/if} />
+							<label for="emailwy2">多店</label>
+						</label> 
+
+					</div>
+
+				</div>
+				<div class="form-group Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">"切换门店"图标</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_image('qhmd_img', $item['qhmd_img'])}
+						<span class="help-block">*建议比例80*80,此功能仅限单店版模式下有效</span>
+					</div>
+
+				</div> 
+				<div class="form-group Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">"切换门店"自定义标题</label>
+					<div class="col-sm-9">
+						<input type="text" name="qhmd_name" class="form-control" value="{$item['qhmd_name']}" />
+						<span class="help-block">*此功能仅限单店版模式下有效</span>
+					</div>
+
+				</div>
+
+				<div class="form-group Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">选择跳转方式</label>
+					<div class="col-sm-9">
+						<select name="qhmd_type" class="col-sm-9" id="type">
+							<option value="1" {if $item['qhmd_type']=='1'} selected {/if}>内部网页跳转</option>
+							<option value="2" {if $item['qhmd_type']=='2'} selected {/if}>外部网页跳转</option>
+							<option value="3" {if $item['qhmd_type']=='3'} selected {/if}>关联小程序跳转</option>
+						</select>
+						<span class="help-block">*此功能仅限单店版模式下有效</span>
+					</div>
+
+				</div>
+				<div class="form-group ygyi1 Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">内部链接</label>
+					<div class="col-sm-9">
+						<input type="text" name="qhmd_url" class="form-control" value="{$item['qhmd_url']}" />
+						<span class="help-block">*跳转我的卡券../my/wdkq</span>
+						<span class="help-block">*跳转我的账单../my/wdzd</span>
+						<span class="help-block">*跳转积分商城../my/jfsc/integral</span>
+						<span class="help-block">*跳转帮助中心../my/bzzx</span>
+						<span class="help-block">*跳转客服中心../my/kfzx</span>
+						<span class="help-block">*跳转商家入口../my/glrk/login</span>
+					</div>
+				</div>
+				<div class="form-group ygyi2 Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">外部链接</label>
+					<div class="col-sm-9">
+						<input type="text" name="qhmd_url2" class="form-control" value="{$item['qhmd_url2']}" />
+						<div class="ygmargin">*此链接为网页外部跳转链接，需要在小程序后台配置业务域名</div>
+
+					</div>
+
+				</div>
+				<div class="form-group ygyi3 Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">跳转小程序名称</label>
+					<div class="col-sm-9">
+						<input type="text" name="qhmd_appidname" class="form-control" value="{$item['qhmd_appidname']}" />
+					</div>
+
+				</div> 
+				<div class="form-group ygyi3 Single">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">小程序appid</label>
+					<div class="col-sm-9">
+						<input type="text" name="qhmd_appid" class="form-control" value="{$item['qhmd_appid']}" />
+						<div class="ygmargin">*请输入跳转的小程序appid(须同一公众号下的关联的小程序之间才可以相互跳转)</div>
+					</div>
+
+				</div>  
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">默认门店显示方式</label>
+					<div class="col-sm-9">
+						<label class="radio-inline">
+							<input type="radio" id="emailwy5" name="md_xs" value="1" {if $item['md_xs']==1}checked{/if} />
+							<label for="emailwy5">后台默认</label>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" id="emailwy6" name="md_xs" value="2" {if $item['md_xs']==2 || empty($item['md_xs'])}checked{/if} />
+							<label for="emailwy6">距离最近</label>
+						</label> 
+						<span class="help-block">*选择后台默认将显示后台选择默认的门店,选择距离最近将显示距离用户最近的门店</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">门店商城功能</label>
+					<div class="col-sm-9">
+						<label class="radio-inline">
+							<input type="radio" id="emailwy3" name="is_sc" value="1" {if $item['is_sc']==1}checked{/if} />
+							<label for="emailwy3">开启</label>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" id="emailwy4" name="is_sc" value="2" {if $item['is_sc']==2 || empty($item['is_sc'])}checked{/if} />
+							<label for="emailwy4">关闭</label>
+						</label> 
+						<span class="help-block">*关闭后商家后台不显示商城管理等功能</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注我们</label>
+					<div class="col-sm-9">
+						{php echo tpl_form_field_image('follow', $item['follow'])}
+						<span class="help-block">*建议比例 100*100</span>
+					</div>
+				</div>   
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">平台简介</label>
+					<div class="col-sm-9">
+						{php echo tpl_ueditor('details',$item['details']);}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<input type="submit" name="submit" value="提交" class="btn col-xs-2" style="color: white;background-color: #44ABF7;margin-left: 30%;"/>
+			<input type="hidden" name="token" value="{$_W['token']}" />
+			<input type="hidden" name="id" value="{$item['id']}" />
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		hideAndShow()
+		function hideAndShow(){
+			var val = $(" input[name='model']:checked").val()
+			console.log(val)
+			if(val==1){
+				$(".Single").show()
+			}else{
+				$(".Single").hide()
+			}
+		}
+		$("input[name='model' ]").click(function(){
+			hideAndShow()
+		})
+		$("#frame-7").show();
+		$("#yframe-7").addClass("wyactive");
+		"{if $item}"
+		"{if $item['qhmd_type']=='1'}"
+		$('.ygyi2').hide();
+		$('.ygyi3').hide();
+		"{/if}"
+		"{if $item['qhmd_type']=='2'}"
+		$('.ygyi1').hide();
+		$('.ygyi3').hide();
+		"{/if}" 
+		"{if $item['qhmd_type']=='3'}"
+		$('.ygyi1').hide();
+		$('.ygyi2').hide();
+		"{/if}"            
+		"{else}"
+		$('.ygyi2').hide();
+		$('.ygyi3').hide();
+		"{/if}"
+		$("select#type").change(function(){
+			if($(this).val()=='1'){
+				console.log($(this).val())
+				$(".ygyi1").show();
+				$(".ygyi2").hide();
+				$(".ygyi3").hide();  
+			}else if($(this).val()=='2'){
+				console.log($(this).val())
+				$(".ygyi1").hide();
+				$(".ygyi2").show();
+				$(".ygyi3").hide();  
+			}else if($(this).val()=='3'){
+				console.log($(this).val())
+				$(".ygyi1").hide();
+				$(".ygyi2").hide();
+				$(".ygyi3").show();  
+			}
+		})
+
+	})
+</script>{template 'common/footer'}

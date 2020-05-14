@@ -1,0 +1,138 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+<style>
+.tip_row{
+	margin-top: 20px;
+}
+.tip_row label{
+	line-height: 40px;
+	font-size:15px;
+	text-align: right;
+}
+.tip_row input{
+	padding-left:10px;
+	border:1px solid #ccc;
+	height: 40px;
+}
+</style>
+<ul class="nav nav-tabs">
+    <span class="ygxian"></span>
+    <div class="ygdangq">当前位置:</div>    
+    <li class="active"><a href="{php echo $this->createWebUrl('stcard')}">实体卡管理</a></li>
+</ul>
+<div class="main">
+    <div class="row">
+    <div class="col-lg-12">
+    <button class="btn ygshouqian2" data-toggle="modal" data-target="#myTip">点击批量生成卡号</button>
+<!--         <form action="" method="POST" class="col-md-6">
+            <div class="input-group" style="width: 250px">
+                <input type="text" name="keywords" class="form-control" placeholder="请输入生成卡号数量">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit" value="生成实体卡"/>
+                </span>
+            </div>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+        </form>
+    </div><!-- /.col-lg-6 -->
+</div>
+</div>
+    <div class="main">
+    <!-- 门店列表部分开始 -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                次卡列表
+            </div>
+            <div class="panel-body" style="padding: 0px 15px;">
+                <div class="row">
+                    <table class="yg5_tabel col-md-12">
+                        <tr class="yg5_tr1">
+                        <td class="store_td1 col-md-1">名称</td>
+                            <td class="col-md-1">生成时间</td>
+                            <td class="col-md-1">生成数量/绑定数量</td> 
+                            <td class="col-md-1">实体卡期限</td>                     
+                            <td class="col-md-1">操作</td>
+                        </tr>
+                      {loop $list $key $item}
+                        <tr class="yg5_tr2">
+                        <td><div> {$item['name']}</div></td>
+                            <td><div> {$item['time']}</div></td>
+                            <td><div> {$item['number']}/{$item['count']}</div></td>
+                            <td><div> {$item['term']}天</div></td>
+                            <td>
+                                <button type="button" class="btn ygyouhui2 btn-xs" ><a href="{php echo $this->createWebUrl('stcardinfo',array('type_id'=>$item['id']))}">实体卡列表</a></button>
+                                <button type="button" class="btn ygshouqian2 btn-xs" ><a href="{php echo $this->createWebUrl('stcard',array('op'=>'dc','type_id'=>$item['id']))}">导出</a></button>
+                            </td>
+                        </tr>
+                        {/loop}
+                        {if empty($list)}
+                          <tr>
+                            <td class="yg5_tr1" colspan="8" style="padding: 15px;text-align: center;">
+                              暂无生成记录
+                            </td>
+                          </tr>
+                        {/if}
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        								<!--点击选择弹框-->
+				<div class="modal fade" id="myTip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">
+									提示
+								</h4>
+							</div>
+							<form action="" method="POST">
+								<div class="modal-body">
+                                <div class="col-md-12 tip_row">
+                                        <label for="" class="col-md-3">实体卡名称 : </label>
+                                        <input type="text" placeholder="请输入要生成的实体卡名称" class="name col-md-5" name="name">
+                                    </div>
+									<div class="col-md-12 tip_row">
+										<label for="" class="col-md-3">实体卡数量 : </label>
+										<input type="number" placeholder="请输入要生成的实体卡数量" class="js_money col-md-5" name="js_money">
+									</div>
+									<div class="col-md-12 tip_row" >
+										<label for="" class="col-md-3">实体卡期限(天) : </label>
+										<input type="number" placeholder="请输入要生成的实体卡期限" class="js_num col-md-5" name="js_num">
+									</div>													
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+									<input name="submit" type="submit" value="提交" class="btn btn-info js_submit">
+                                    <input type="hidden" name="token" value="{$_W['token']}"/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+  <div class="text-right we7-margin-top">{$pager}</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-11").show();
+        $("#yframe-11").addClass("wyactive");
+
+
+        $(".js_submit").click(function(){
+        	var js_money=$(".js_money").val()
+        	var js_num=$(".js_num").val()
+        	if(js_money==""){
+        		alert("请输入数量!!")
+        		return false;
+        	}else if(js_num==""){
+				alert("请输入期限!!")
+        		return false;
+
+        	}
+        })
+    })
+</script>{template 'common/footer'}

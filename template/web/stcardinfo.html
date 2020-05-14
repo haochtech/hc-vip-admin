@@ -1,0 +1,75 @@
+{template 'public/header'}
+{template 'public/comhead'}
+<link rel="stylesheet" type="text/css" href="../addons/zh_vip/template/public/ygcsslist.css">
+
+<div class="main">
+    <div class="row">
+    <div class="col-lg-12">
+        <form action="" method="POST" class="col-md-6">
+            <div class="input-group" style="width: 300px">
+                <input type="text" name="keywords" class="form-control" placeholder="请输入实体卡卡号">
+                <span class="input-group-btn">
+                    <input type="submit" class="btn btn-default" name="submit" value="查找"/>
+                </span>
+            </div>
+            <input type="hidden" name="token" value="{$_W['token']}"/>
+        </form>
+    </div><!-- /.col-lg-6 -->
+</div>
+</div>
+    <div class="main">
+    <!-- 门店列表部分开始 -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                次卡列表
+            </div>
+            <div class="panel-body" style="padding: 0px 15px;">
+                <div class="row">
+                    <table class="yg5_tabel col-md-12">
+                        <tr class="yg5_tr1">
+                            <td class="store_td1 col-md-1">实体卡卡号</td>
+                            <td class="col-md-1">实体卡密码</td>
+                            <td class="col-md-1">期限</td>
+                            <td class="col-md-1">激活人</td>
+                            <td class="col-md-1">激活时间</td>
+                            <td class="col-md-1">状态</td>
+                            <td class="col-md-1">操作</td>
+                        </tr>
+                      {loop $list $key $item}
+                        <tr class="yg5_tr2">
+                        {php $lquser=pdo_get('zhvip_user',array('vip_code'=>$item['code']))}
+                            <td><div> {$item['code']}</div></td>
+                            <td><div> {$item['pwd']}</div></td>
+                            <td><div> {$item['term']}</div></td>
+                            <td><div> {if $lquser['name']}{$lquser['name']}{else}<font color="red">暂未激活</font>{/if}</div></td>
+                            <td><div>{if $lquser['code_time']} {php echo  date('Y-m-d H:i:s',$lquser['code_time'])}{else}<font color="red">暂未激活</font>{/if}</div></td>
+                            <td><div> {if $item['state']==1}<button type="button" class="btn ygyouhui2 btn-xs" >已绑定</button>{elseif $item['state']==2}<button type="button" class="btn ygshouqian2 btn-xs" >未绑定</button>{/if}</div></td>
+                            <td>{if $item['state']==2}<font color="red">暂未激活</font>{else}<a href="{php echo $this->createWebUrl('adduser',array('id'=>$lquser['id']))}"><button type="button" class="btn ygyouhui2 btn-xs" >查看用户</button></a>{/if}
+                                <a href="{php echo $this->createWebUrl('userorder',array('user_id'=>$lquser['id']));}" class="storespan btn btn-xs">
+                            <span class="fa fa-file-text-o" style="margin:0 auto;"></span>
+                            <span class="bianji" style="left:-100%">会员订单
+                                <span class="arrowdown"></span>
+                            </span>
+                        </a>
+                            </td>
+                        </tr>
+                        {/loop}
+                        {if empty($list)}
+                          <tr>
+                            <td class="yg5_tr1" colspan="8" style="padding: 15px;text-align: center;">
+                              暂无实体卡信息
+                            </td>
+                          </tr>
+                        {/if}
+                    </table>
+                </div>
+            </div>
+        </div>
+  <div class="text-right we7-margin-top">{$pager}</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $("#frame-11").show();
+        $("#yframe-11").addClass("wyactive");
+    })
+</script>{template 'common/footer'}
